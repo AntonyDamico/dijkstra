@@ -44,7 +44,7 @@ class AssetsManager:
         text_surface = custom_text.render(text, True, font_color)
         return text_surface, text_surface.get_rect()
 
-    def draw_square(self, x, y, w, h, color=colors.NEGRO):
+    def draw_rect(self, x, y, w, h, color=colors.NEGRO):
         """
         Imprime un rectángulo en la pantalla dada una posición y tamaño
 
@@ -72,6 +72,8 @@ class AssetsManager:
         tupple color: color del círculo | default=color.NEGRO
         int w: cantidad de relleno del círculo, dejar en 0 para que esté relleno completamente
         """
+        x = int(x)
+        y = int(y)
         pygame.draw.circle(self.game_display, color, (x,y), radius, w)
 
     def draw_line(self, initial_x, initial_y, final_x, final_y, color=colors.NEGRO, w=1):
