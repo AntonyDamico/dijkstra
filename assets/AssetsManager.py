@@ -60,7 +60,7 @@ class AssetsManager:
         s.fill(color)
         self.game_display.blit(s, (x, y))
 
-    def draw_circle(self, x, y, radius, color=colors.NEGRO, w=0):
+    def draw_circle(self, x, y, r, inactive_color=colors.NEGRO, active_color=None, w=0, action=None, args=[]):
         """
         Imprime un circulo a la pantalla
 
@@ -68,15 +68,27 @@ class AssetsManager:
         ----------
         int x: posición x del círculo
         int y: posición y del círculo
-        int radius: radio del círculo
+        int r: radio del círculo
         tupple color: color del círculo | default=color.NEGRO
         int w: cantidad de relleno del círculo, dejar en 0 para que esté relleno completamente
         """
         x = int(x)
         y = int(y)
-        pygame.draw.circle(self.game_display, color, (x,y), radius, w)
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
 
-    def draw_line(self, initial_x, initial_y, final_x, final_y, color=colors.NEGRO, w=1):
+        if active_color is None:
+            active_color = inactive_color
+
+        # Accion
+        if x+r > mouse[0] > x-r and y + r > mouse[1] > y-r:
+            pygame.draw.circle(self.game_display, active_color, (x,y), r, w)
+            if click[0] == 1 and action != None:
+                action(*args)
+        else:
+            pygame.draw.circle(self.game_display, inactive_color, (x,y), r, w)
+
+    def draw_line(self, initial_x, initial_y, final_x, final_y, inactive_color=colors.NEGRO, active_color=None, w=1, action=None, args=[]):
         """
         Imprime una línea a la pantalla
 
@@ -91,7 +103,20 @@ class AssetsManager:
         """
         initial_point = (initial_x, initial_y)
         final_point = (final_x, final_y)
-        pygame.draw.line(self.game_display, color, initial_point, final_point, w)
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+
+        if active_color is None:
+            active_color = inactive_color
+
+        if final_x > mouse[0] > initial_x and final_y > mouse[1] > initial_y:
+            pygame.draw.line(self.game_display, active_color, initial_point, final_point, w)
+            if click[0] == 1 and action != None:
+                action(*args)
+        else:
+            pygame.draw.line(self.game_display, inactive_color, initial_point, final_point, w)
+            
+
 
     def print_text(self, text, x, y, font_size=25, font_color=colors.NEGRO):
         """

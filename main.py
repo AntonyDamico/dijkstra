@@ -18,11 +18,25 @@ def salir_juego():
                 pygame.quit()
                 quit()
 
+def talk(arg):
+    print(arg)
 
 def mostrar_sidebar():
-    assets.draw_rect(ancho_p*0.85, 0, ancho_p*0.15, alto_p, color=colors.AZUL)
-    assets.draw_line(ancho_p*0.87, alto_p*0.25, ancho_p*0.97, alto_p*0.35, w=10)
-    assets.draw_circle(ancho_p*0.92, alto_p*0.55, 10)
+    rect_args_list = [ancho_p*0.85, 0, ancho_p*0.15, alto_p]
+    rect_args_dic = {'color': colors.AZUL}
+
+    line_args_list = [ancho_p*0.87, alto_p*0.25, ancho_p*0.97, alto_p*0.35]
+    line_args_dic = {'w': 10, 'inactive_color':colors.NEGRO, 'active_color': colors.ROJO, 'action': talk, 'args':['hello']}
+
+    circle_args_list = [ancho_p*0.92, alto_p*0.55, 15]
+    circle_args_dic = {'inactive_color':colors.NEGRO, 'active_color':colors.ROJO, 'action':talk, 'args':['hello']}
+
+    assets.draw_rect(*rect_args_list, **rect_args_dic)
+    assets.draw_line(*line_args_list, **line_args_dic)
+    assets.draw_circle(*circle_args_list, **circle_args_dic)
+
+
+
 
 def main_loop():
     while True:
