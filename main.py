@@ -10,7 +10,7 @@ alto_p = 600
 assets = AssetsManager(ancho_p, alto_p, 'Dijkstra')
 clock = pygame.time.Clock()
 
-assets.background_color(colors.NEGRO)
+# assets.background_color(colors.NEGRO)
 
 
 def salir_juego():
@@ -41,10 +41,28 @@ def mostrar_sidebar():
     assets.draw_circle(*circle_args_list, **circle_args_dic)
 
 
+canvas_elements = [
+    assets.draw_circle
+]
+
+canvas_args_list = [
+    [20, 20, 10]
+]
+
+canvas_args_dict = [
+    {'inactive_color': colors.NEGRO,
+     'active_color': colors.ROJO, }
+]
+
+
 def main_loop():
     while True:
         salir_juego()
         mostrar_sidebar()
+
+        for i in range(len(canvas_elements)):
+            canvas_elements[i](*canvas_args_list[i], **canvas_args_dict[i])
+
         pygame.display.update()
         clock.tick(15)
 
